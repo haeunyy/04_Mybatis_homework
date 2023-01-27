@@ -6,79 +6,79 @@ DROP TABLE TB_GRADE CASCADE CONSTRAINTS;
 CREATE TABLE TB_YOUTUBER (
  YOUTUBER_CODE          NUMBER(10) PRIMARY KEY ,
  YOUTUBER_USERNAME      VARCHAR2(30) UNIQUE NOT NULL ,
- YOUTUBER_NAME          VARCHAR2(30) NOT NULL ,
+ --YOUTUBER_NAME          VARCHAR2(30) NOT NULL ,
  YOUTUBER_NUNMBER       VARCHAR2(30) UNIQUE NOT NULL,
  YOUTUBER_URL           VARCHAR2(50) NOT NULL, 
- YOUTUBER_UPLOAD_DATE   DATE,
+ --YOUTUBER_UPLOAD_DATE   DATE,
  MANAGER_CODE           NUMBER(10) );
-COMMENT ON COLUMN TB_YOUTUBER.YOUTUBER_CODE  IS 'À¯Æ©¹ö °ü¸®ÄÚµå';
-COMMENT ON COLUMN TB_YOUTUBER.YOUTUBER_USERNAME  IS 'À¯Æ©¹ö °èÁ¤ÀÌ¸§';
-COMMENT ON COLUMN TB_YOUTUBER.YOUTUBER_NAME  IS 'À¯Æ©¹ö ÀÌ¸§';
-COMMENT ON COLUMN TB_YOUTUBER.YOUTUBER_NUNMBER  IS 'À¯Æ©¹ö ÀüÈ­¹øÈ£';
-COMMENT ON COLUMN TB_YOUTUBER.YOUTUBER_URL  IS '»çÀÌÆ®';
-COMMENT ON COLUMN TB_YOUTUBER.YOUTUBER_UPLOAD_DATE  IS '¾÷·Îµå ³¯Â¥';
-COMMENT ON COLUMN TB_YOUTUBER.MANAGER_CODE  IS '¸Å´ÏÀú ÄÚµå';
---COMMENT ON COLUMN TB_YOUTUBER.DEAL_YN  IS '°Å·¡ ¿©ºÎ';
+COMMENT ON COLUMN TB_YOUTUBER.YOUTUBER_CODE  IS 'ìœ íŠœë²„ ê´€ë¦¬ì½”ë“œ';
+COMMENT ON COLUMN TB_YOUTUBER.YOUTUBER_USERNAME  IS 'ìœ íŠœë²„ ê³„ì •ì´ë¦„';
+--COMMENT ON COLUMN TB_YOUTUBER.YOUTUBER_NAME  IS 'ìœ íŠœë²„ ì´ë¦„';
+COMMENT ON COLUMN TB_YOUTUBER.YOUTUBER_NUNMBER  IS 'ìœ íŠœë²„ ì „í™”ë²ˆí˜¸';
+COMMENT ON COLUMN TB_YOUTUBER.YOUTUBER_URL  IS 'ì‚¬ì´íŠ¸';
+--COMMENT ON COLUMN TB_YOUTUBER.YOUTUBER_UPLOAD_DATE  IS 'ì—…ë¡œë“œ ë‚ ì§œ';
+COMMENT ON COLUMN TB_YOUTUBER.MANAGER_CODE  IS 'ë§¤ë‹ˆì € ì½”ë“œ';
+--COMMENT ON COLUMN TB_YOUTUBER.DEAL_YN  IS 'ê±°ëž˜ ì—¬ë¶€';
 
 ALTER TABLE TB_YOUTUBER
 MODIFY YOUTUBER_URL DEFAULT 'https://www.youtube.com/@';
 
 ALTER TABLE TB_YOUTUBER;
 --ADD CONSTRAINT PK_PUBLISHER_NM PRIMARY KEY (PUBLISHER_NM);
---µµ¼­ °ü¸® ÇÁ·Î±×·¥ ÂüÁ¶ 
+--ë„ì„œ ê´€ë¦¬ í”„ë¡œê·¸ëž¨ ì°¸ì¡° 
  
 CREATE TABLE TB_MANAGEMENT (
  MANAGER_CODE     NUMBER(10) PRIMARY KEY,
  MANAGER_NAME     VARCHAR2(30) NOT NULL,
  MANAGER_NUMBER   VARCHAR2 (30) NOT NULL ); 
-COMMENT ON COLUMN TB_MANAGEMENT.MANAGER_CODE  IS '¸Å´ÏÀú ÄÚµå';
-COMMENT ON COLUMN TB_MANAGEMENT.MANAGER_NAME  IS '¸Å´ÏÀú ÀÌ¸§';
-COMMENT ON COLUMN TB_MANAGEMENT.MANAGER_NUMBER  IS '¸Å´ÏÀú ÀüÈ­¹øÈ£';
+COMMENT ON COLUMN TB_MANAGEMENT.MANAGER_CODE  IS 'ë§¤ë‹ˆì € ì½”ë“œ';
+COMMENT ON COLUMN TB_MANAGEMENT.MANAGER_NAME  IS 'ë§¤ë‹ˆì € ì´ë¦„';
+COMMENT ON COLUMN TB_MANAGEMENT.MANAGER_NUMBER  IS 'ë§¤ë‹ˆì € ì „í™”ë²ˆí˜¸';
 
 
 CREATE TABLE TB_GRADE (
  YOUTUBER_CODE  NUMBER UNIQUE NOT NULL ,
- SUBSCRIBER     VARCHAR2(30),
+ SUBSCRIBER     NUMBER(15),
  GRADE          VARCHAR2 (30) PRIMARY KEY ); 
-COMMENT ON COLUMN TB_GRADE.YOUTUBER_CODE  IS 'À¯Æ©¹ö ÄÚµå';
-COMMENT ON COLUMN TB_GRADE.SUBSCRIBER  IS '±¸µ¶ÀÚ¼ö';
-COMMENT ON COLUMN TB_GRADE.GRADE  IS 'µî±Þ';
+COMMENT ON COLUMN TB_GRADE.YOUTUBER_CODE  IS 'ìœ íŠœë²„ ì½”ë“œ';
+COMMENT ON COLUMN TB_GRADE.SUBSCRIBER  IS 'êµ¬ë…ìžìˆ˜';
+COMMENT ON COLUMN TB_GRADE.GRADE  IS 'ë“±ê¸‰';
 
 ALTER TABLE TB_GRADE
-  ADD CONSTRAINT FK_BOOK_AUTHOR_01 FOREIGN KEY (YOUTUBER_CODE)
+  ADD CONSTRAINT FK_YOUTUBER_CODE_01 FOREIGN KEY (YOUTUBER_CODE)
   REFERENCES TB_YOUTUBER (YOUTUBER_CODE);
 ALTER TABLE TB_YOUTUBER
-  ADD CONSTRAINT FK_BOOK_AUTHOR_02 FOREIGN KEY (BOOK_NO)
+  ADD CONSTRAINT FK_MANAGER_CODE_02 FOREIGN KEY (MANAGER_CODE)
   REFERENCES TB_MANAGEMENT (MANAGER_CODE);
 
-ALTER TABLE TB_BOOK DISABLE CONSTRAINT FK_BOOK_01;
-ALTER TABLE TB_BOOK_AUTHOR DISABLE CONSTRAINT FK_BOOK_AUTHOR_01;
-ALTER TABLE TB_BOOK_AUTHOR DISABLE CONSTRAINT FK_BOOK_AUTHOR_02;
+--ALTER TABLE TB_BOOK DISABLE CONSTRAINT FK_BOOK_01;
+--ALTER TABLE TB_BOOK_AUTHOR DISABLE CONSTRAINT FK_BOOK_AUTHOR_01;
+--ALTER TABLE TB_BOOK_AUTHOR DISABLE CONSTRAINT FK_BOOK_AUTHOR_02;
 
-INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('Áö½ÄÃ¢°í', '033-1658-9501', 'Y');
-INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('Ã¢ÀÛ°ú ºñÆò', '052-7188-9619', 'Y');
-INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('»ý°¢ ³ª¹«', '051-3046-6433', 'Y');
-INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('¼¼±â ¹®È­»ç', '02-4731-9001', 'Y');
-INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('Ã»¿¬', '033-8615-4405', 'Y');
-INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('Ã¢ÀÛ21', '02-8537-2595', 'Y');
-INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('È²±Ý°¡Áö', '02-2451-9387', 'Y');
-INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('Ã¤¸²´ç', '02-8185-1967', 'Y');
-INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('ÁöÇý¿Í °¡Áö', '062-8240-2438', 'Y');
-INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('ºñÆò¹®È­', '061-8626-4002', 'Y');
-INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('ÀÌ¸µ ÃâÆÇ', '02-9617-3128', 'Y');
+INSERT INTO TB_YOUTUBER (YOUTUBER_CODE, YOUTUBER_USERNAME, YOUTUBER_NUMBEER,YOUTUBER_URL,MANAGER_CODE) VALUES ('ì§€ì‹ì°½ê³ ', '033-1658-9501', 'Y');
+INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('ì°½ìž‘ê³¼ ë¹„í‰', '052-7188-9619', 'Y');
+INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('ìƒê° ë‚˜ë¬´', '051-3046-6433', 'Y');
+INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('ì„¸ê¸° ë¬¸í™”ì‚¬', '02-4731-9001', 'Y');
+INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('ì²­ì—°', '033-8615-4405', 'Y');
+INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('ì°½ìž‘21', '02-8537-2595', 'Y');
+INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('í™©ê¸ˆê°€ì§€', '02-2451-9387', 'Y');
+INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('ì±„ë¦¼ë‹¹', '02-8185-1967', 'Y');
+INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('ì§€í˜œì™€ ê°€ì§€', '062-8240-2438', 'Y');
+INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('ë¹„í‰ë¬¸í™”', '061-8626-4002', 'Y');
+INSERT INTO TB_PUBLISHER (PUBLISHER_NM, PUBLISHER_TELNO, DEAL_YN) VALUES ('ì´ë§ ì¶œíŒ', '02-9617-3128', 'Y');
 
 
 
 
 COMMIT;
 
-INSERT INTO TB_BOOK (BOOK_NO, BOOK_NM, ISBN, PAGE, PRICE, MAINCTG, SUBCTG, ISSUE_DATE, SALE_YN, STOCK_QTY, PUBLISHER_NM) VALUES ('1991081002', '¾ÆÅ¸Æ®·Ñ', '8984326565', 200, 3000, '½Ã', '¿Ü±¹ ½Ã', TO_DATE('10-08-1991', 'DD-MM-YYYY'), 'Y', 39, 'Ã¤¸²´ç');
+INSERT INTO TB_BOOK (BOOK_NO, BOOK_NM, ISBN, PAGE, PRICE, MAINCTG, SUBCTG, ISSUE_DATE, SALE_YN, STOCK_QTY, PUBLISHER_NM) VALUES ('1991081002', 'ì•„íƒ€íŠ¸ë¡¤', '8984326565', 200, 3000, 'ì‹œ', 'ì™¸êµ­ ì‹œ', TO_DATE('10-08-1991', 'DD-MM-YYYY'), 'Y', 39, 'ì±„ë¦¼ë‹¹');
 
 
 COMMIT;
 --PROMPT
 --PROMPT LOADING TB_BOOK_AUTHOR...
-INSERT INTO TB_BOOK_AUTHOR (BOOK_NO, WRITER_NO, COMPOSE_TYPE) VALUES ('2001092003', '751', 'ÁöÀ½')
+INSERT INTO TB_BOOK_AUTHOR (BOOK_NO, WRITER_NO, COMPOSE_TYPE) VALUES ('2001092003', '751', 'ì§€ìŒ')
 
 
 COMMIT;
@@ -88,7 +88,7 @@ ALTER TABLE TB_BOOK_AUTHOR ENABLE CONSTRAINT FK_BOOK_AUTHOR_01;
 ALTER TABLE TB_BOOK_AUTHOR ENABLE CONSTRAINT FK_BOOK_AUTHOR_02;
 
 ----------------------------------------------------------------
- --Á¦¾àÁ¶°ÇÀÌ ¾ø´Â USER_NOCONS Å×ÀÌºí¿¡ µ¥ÀÌÅÍ 1Çà »ðÀÔ
+ --ì œì•½ì¡°ê±´ì´ ì—†ëŠ” USER_NOCONS í…Œì´ë¸”ì— ë°ì´í„° 1í–‰ ì‚½ìž…
  INSERT
 INTO USER_NOCONS
 (
@@ -105,13 +105,13 @@ VALUES
 1
 ,'user01'
 ,'pass01'
-,'È«±æµ¿'
-,'³²'
+,'í™ê¸¸ë™'
+,'ë‚¨'
 ,'010-1234-5678'
 ,'hong123@greedy.com'
 );
   
---¾Æ¹«·± Á¦¾à Á¶°Ç¾øÀÌ Å×ÀÌºíÀ» »ý¼ºÇÏ¸é ÇÊ¼ö Á¤º¸°¡ null·Î ´©¶ôµÇ¾îµµ ¹®Á¦¾øÀÌ »ðÀÔ
+--ì•„ë¬´ëŸ° ì œì•½ ì¡°ê±´ì—†ì´ í…Œì´ë¸”ì„ ìƒì„±í•˜ë©´ í•„ìˆ˜ ì •ë³´ê°€ nullë¡œ ëˆ„ë½ë˜ì–´ë„ ë¬¸ì œì—†ì´ ì‚½ìž…
 
  INSERT
 INTO USER_NOCONS
@@ -130,13 +130,13 @@ VALUES
 , NULL
 , NULL
 , NULL
-,'³²'
+,'ë‚¨'
 ,'010-1234-5678'
 ,'hong123@greedy.com'
 );
   
   
---"ÄÃ·³ ·¹º§"¿¡ NOT NULL Á¦¾à Á¶°ÇÀ» ¼³Á¤ÇÑ´Ù. NOT NULLÀº ÄÃ·³·¹º§ ÀÚ¸®¿¡¸¸ ¾µ¼öÀÖ´Ù. 
+--"ì»¬ëŸ¼ ë ˆë²¨"ì— NOT NULL ì œì•½ ì¡°ê±´ì„ ì„¤ì •í•œë‹¤. NOT NULLì€ ì»¬ëŸ¼ë ˆë²¨ ìžë¦¬ì—ë§Œ ì“¸ìˆ˜ìžˆë‹¤. 
 
 CREATE TABLE USER_NOTNULL (
  USER_NO NUMBER NOT NULL,
@@ -148,7 +148,7 @@ CREATE TABLE USER_NOTNULL (
  EMAIL VARCHAR2(50)
  );
 
---¸¸µé¾îÁø Å×ÀÌ•Šl Á¦¾àÁ¶°Ç °Ë»ö
+--ë§Œë“¤ì–´ì§„ í…Œì´Â•ÂŠÂl ì œì•½ì¡°ê±´ ê²€ìƒ‰
 SELECT 
         UC.*
         ,UCC.*
@@ -173,16 +173,16 @@ VALUES
   1
 , 'user01'
 , 'pass01'
-, 'È«±æµ¿'
-,'³²'
+, 'í™ê¸¸ë™'
+,'ë‚¨'
 ,'010-1234-5678'
 ,'hong123@greedy.com'
 );
 
---UNIQUE Á¦¾àÁ¶°Ç : ÄÃ·³ÀÇ ÀÔ·Â °ª¿¡ ´ëÇØ Áßº¹À» Á¦ÇÑÇÏ´Â Á¦¾à Á¶°Ç
---"ÄÃ·³ ·¹º§" , "Å×ÀÌºí·¹º§" ¸ðµÎ ¼³Á¤°¡´É
---Á¦¾à Á¶°ÇÀÌ ¾ø´Â user_nocons¿¡´Â ¿ÏÀüÈ÷ µ¿ÀÏÇÑ ÇàÀ» »ðÀÔÇØµµ ¹®Á¦°¡ ¾ø´Ù .
---¾ÆÀÌµðµîÀÇ ÄÃ·³Àº Áßº¹À» Çã¿ëÇÏ¸é ¾ÈµÇ¹Ç·Î UNIQUEÁ¦¾à Á¶°ÇÀÌ ÇÊ¿äÇÏ´Ù. 
+--UNIQUE ì œì•½ì¡°ê±´ : ì»¬ëŸ¼ì˜ ìž…ë ¥ ê°’ì— ëŒ€í•´ ì¤‘ë³µì„ ì œí•œí•˜ëŠ” ì œì•½ ì¡°ê±´
+--"ì»¬ëŸ¼ ë ˆë²¨" , "í…Œì´ë¸”ë ˆë²¨" ëª¨ë‘ ì„¤ì •ê°€ëŠ¥
+--ì œì•½ ì¡°ê±´ì´ ì—†ëŠ” user_noconsì—ëŠ” ì™„ì „ížˆ ë™ì¼í•œ í–‰ì„ ì‚½ìž…í•´ë„ ë¬¸ì œê°€ ì—†ë‹¤ .
+--ì•„ì´ë””ë“±ì˜ ì»¬ëŸ¼ì€ ì¤‘ë³µì„ í—ˆìš©í•˜ë©´ ì•ˆë˜ë¯€ë¡œ UNIQUEì œì•½ ì¡°ê±´ì´ í•„ìš”í•˜ë‹¤. 
  INSERT
 INTO UNIQUE
 (
@@ -199,8 +199,8 @@ VALUES
 1
 ,'user01'
 ,'pass01'
-,'È«±æµ¿'
-,'³²'
+,'í™ê¸¸ë™'
+,'ë‚¨'
 ,'010-1234-5678'
 ,'hong123@greedy.com'
 );
@@ -215,7 +215,7 @@ CREATE TABLE USER_UNIQUE (
  EMAIL VARCHAR2(50)
  );
 
---µÎ¹ø ½ÇÇà½ÃÄÑ À¯´ÏÅ© ±¸¹®ÀÇ ¿À·ù ¸íÄª È®ÀÎÇÑ´Ù. 
+--ë‘ë²ˆ ì‹¤í–‰ì‹œì¼œ ìœ ë‹ˆí¬ êµ¬ë¬¸ì˜ ì˜¤ë¥˜ ëª…ì¹­ í™•ì¸í•œë‹¤. 
  INSERT
 INTO USER_UNIQUE
 (
@@ -232,14 +232,14 @@ VALUES
 1
 ,'user01'
 ,'pass01'
-,'È«±æµ¿'
-,'³²'
+,'í™ê¸¸ë™'
+,'ë‚¨'
 ,'010-1234-5678'
 ,'hong123@greedy.com'
 );
 
---À§¿¡¼­ È®ÀÎµÈ Á¶°Ç¸íÀ» È®ÀÎÇÑ ÈÄ¿¡ 
---Á¦¾à Á¶°Ç¸íÀ» ÀÌ¿ëÇØ¼­ Á¦¾à Á¶°Ç °Ë»ö
+--ìœ„ì—ì„œ í™•ì¸ëœ ì¡°ê±´ëª…ì„ í™•ì¸í•œ í›„ì— 
+--ì œì•½ ì¡°ê±´ëª…ì„ ì´ìš©í•´ì„œ ì œì•½ ì¡°ê±´ ê²€ìƒ‰
 SELECT
         UCC.TABLE_NAME
         ,UCC.COLUMN_NAME
@@ -249,7 +249,7 @@ SELECT
  WHERE UC.CONSTRAINT_NAME = UCC.CONSTRAINT_NAME
    AND UCC.CONSTRAINT_NAME = 'SYS_C007445';
 
---UNIQUE Á¦¾à Á¶°ÇÀ» "Å×ÀÌºí ·¹º§"¿¡¼­ ¼³Á¤ÇÑ USER_UNIQUE2 Å×ÀÌºí »ý¼º 
+--UNIQUE ì œì•½ ì¡°ê±´ì„ "í…Œì´ë¸” ë ˆë²¨"ì—ì„œ ì„¤ì •í•œ USER_UNIQUE2 í…Œì´ë¸” ìƒì„± 
 CREATE TABLE USER_UNIQUE2 (
  USER_NO NUMBER NOT NULL,
  USER_ID VARCHAR2(20) NOT NULL,
@@ -278,14 +278,14 @@ VALUES
 1
 ,'user01'
 ,'pass01'
-,'È«±æµ¿'
-,'³²'
+,'í™ê¸¸ë™'
+,'ë‚¨'
 ,'010-1234-5678'
 ,'hong123@greedy.com'
 );
 
---À§¿¡¼­ È®ÀÎµÈ Á¶°Ç¸íÀ» È®ÀÎÇÑ ÈÄ¿¡ 
---Á¦¾à Á¶°Ç¸íÀ» ÀÌ¿ëÇØ¼­ Á¦¾à Á¶°Ç °Ë»ö
+--ìœ„ì—ì„œ í™•ì¸ëœ ì¡°ê±´ëª…ì„ í™•ì¸í•œ í›„ì— 
+--ì œì•½ ì¡°ê±´ëª…ì„ ì´ìš©í•´ì„œ ì œì•½ ì¡°ê±´ ê²€ìƒ‰
 SELECT
         UCC.TABLE_NAME
         ,UCC.COLUMN_NAME
@@ -296,8 +296,8 @@ SELECT
    AND UCC.CONSTRAINT_NAME = 'SYS_C007450';
 
 
---µÎ °³ ÀÌ»óÀÇ ÄÃ·³À» ¹­¾î¼­ ÇÏ³ªÀÇ UNIQUE Á¦¾à Á¶°ÇÀ» ¼³Á¤ÇÒ ¼öµµ ÀÖ´Ù. 
---ÀÌ¶§´Â Å×ÀÌºí·¹º§¿¡¼­¸¸ ¼³Á¤ÇÒ ¼ö ÀÖ´Ù. 
+--ë‘ ê°œ ì´ìƒì˜ ì»¬ëŸ¼ì„ ë¬¶ì–´ì„œ í•˜ë‚˜ì˜ UNIQUE ì œì•½ ì¡°ê±´ì„ ì„¤ì •í•  ìˆ˜ë„ ìžˆë‹¤. 
+--ì´ë•ŒëŠ” í…Œì´ë¸”ë ˆë²¨ì—ì„œë§Œ ì„¤ì •í•  ìˆ˜ ìžˆë‹¤. 
 CREATE TABLE USER_UNIQUE3 (
  USER_NO NUMBER NOT NULL,
  USER_ID VARCHAR2(20) NOT NULL,
@@ -306,10 +306,10 @@ CREATE TABLE USER_UNIQUE3 (
  GENDER VARCHAR2 (10),
  PHONE VARCHAR2(30),
  EMAIL VARCHAR2(50),
- UNIQUE (USER_NO, USER_ID)-- ¿©·¯°³ÀÇ Å×ÀÌºíÀ» ¹­À»¶§´Â ¹Ýµå½Ã Å×ÀÌºí ·¹º§¿¡¼­ ¼³Á¤
+ UNIQUE (USER_NO, USER_ID)-- ì—¬ëŸ¬ê°œì˜ í…Œì´ë¸”ì„ ë¬¶ì„ë•ŒëŠ” ë°˜ë“œì‹œ í…Œì´ë¸” ë ˆë²¨ì—ì„œ ì„¤ì •
  );
 
----USER UNIQUE3¿¡ USER_NO, USER_ID ¿¡ ´ëÇØ Áßº¹°ª ÀÔ·Â °¡´ÉÇÑÁö È®ÀÎ
+---USER UNIQUE3ì— USER_NO, USER_ID ì— ëŒ€í•´ ì¤‘ë³µê°’ ìž…ë ¥ ê°€ëŠ¥í•œì§€ í™•ì¸
  INSERT
 INTO USER_UNIQUE3
 (
@@ -326,8 +326,8 @@ VALUES
 1
 ,'user01'
 ,'pass01'
-,'È«±æµ¿'
-,'³²'
+,'í™ê¸¸ë™'
+,'ë‚¨'
 ,'010-1234-5678'
 ,'hong123@greedy.com'
 );
@@ -341,7 +341,7 @@ SELECT
  WHERE UC.CONSTRAINT_NAME = UCC.CONSTRAINT_NAME
    AND UCC.CONSTRAINT_NAME = 'SYS_C007455';
    
--- Á¦¾à Á¶°Ç¸íÀ» ÀÌ¿ëÇØ¼­ Á¦¾à Á¶°Ç °Ë»ö
+-- ì œì•½ ì¡°ê±´ëª…ì„ ì´ìš©í•´ì„œ ì œì•½ ì¡°ê±´ ê²€ìƒ‰
 SELECT
        UCC.TABLE_NAME
      , UCC.COLUMN_NAME
@@ -351,7 +351,7 @@ SELECT
  WHERE UC.CONSTRAINT_NAME = UCC.CONSTRAINT_NAME
    AND UCC.CONSTRAINT_NAME = 'SYS_C007359';
 
--- Á¦¾àÁ¶°Ç¿¡ ÀÌ¸§À» ºÙ¿©¼­ Å×ÀÌºí »ý¼º
+-- ì œì•½ì¡°ê±´ì— ì´ë¦„ì„ ë¶™ì—¬ì„œ í…Œì´ë¸” ìƒì„±
 CREATE TABLE CONS_NAME(
   TEST_DATA1 VARCHAR2(20) CONSTRAINT NN_TEST_DATA1 NOT NULL,
   TEST_DATA2 VARCHAR2(20) CONSTRAINT UN_TEST_DATA2 UNIQUE,
@@ -360,7 +360,7 @@ CREATE TABLE CONS_NAME(
 );
 
 
--- CONS_NAME Å×ÀÌºíÀÇ Á¦¾à Á¶°Ç °Ë»ö
+-- CONS_NAME í…Œì´ë¸”ì˜ ì œì•½ ì¡°ê±´ ê²€ìƒ‰
 SELECT
        UC.*
   FROM USER_CONSTRAINTS UC
@@ -368,18 +368,18 @@ SELECT
 
 
 
--- CHECKÁ¦¾à Á¶°Ç : ÄÃ·³¿¡ ±â·ÏµÇ´Â °ª¿¡ Á¶°Ç ¼³Á¤À» ÇÒ ¼ö ÀÖ´Ù. 
---- CHRCK(ÄÃ·³¸í ºñ±³¿¬»êÀÚ ºñ±³°ª)
---ÁÖÀÇ : ºñ±³°ªÀº ¸®ÅÍ·²¸¸ »ç¿ëÇÒ ¼ö ÀÖÀ½, º¯ÇÏ´Â °ªÀÌ³ª ÇÔ¼ö´Â »ç¿ë ¸øÇÔ 
+-- CHECKì œì•½ ì¡°ê±´ : ì»¬ëŸ¼ì— ê¸°ë¡ë˜ëŠ” ê°’ì— ì¡°ê±´ ì„¤ì •ì„ í•  ìˆ˜ ìžˆë‹¤. 
+--- CHRCK(ì»¬ëŸ¼ëª… ë¹„êµì—°ì‚°ìž ë¹„êµê°’)
+--ì£¼ì˜ : ë¹„êµê°’ì€ ë¦¬í„°ëŸ´ë§Œ ì‚¬ìš©í•  ìˆ˜ ìžˆìŒ, ë³€í•˜ëŠ” ê°’ì´ë‚˜ í•¨ìˆ˜ëŠ” ì‚¬ìš© ëª»í•¨ 
 
 
---USER_CHECK¿¡ GENDER¿¡ ´ëÇØ'³²''¿©' ¿Ü¿¡ ÀÔ·Â ºÒ°¡ÇÑÁö Å×½ºÆ® 
+--USER_CHECKì— GENDERì— ëŒ€í•´'ë‚¨''ì—¬' ì™¸ì— ìž…ë ¥ ë¶ˆê°€í•œì§€ í…ŒìŠ¤íŠ¸ 
 CREATE TABLE USER_CHECK (
  USER_NO NUMBER ,
  USER_ID VARCHAR2(20) UNIQUE,
  USER_PWD VARCHAR2(30) NOT NULL,
  USER_NAME VARCHAR2(30) NOT NULL,
- GENDER VARCHAR2 (10) CHECK(GENDER IN ('³²','¿©')),
+ GENDER VARCHAR2 (10) CHECK(GENDER IN ('ë‚¨','ì—¬')),
  PHONE VARCHAR2(30),
  EMAIL VARCHAR2(50) 
  );
@@ -400,19 +400,19 @@ VALUES
 3
 ,'user02'
 ,'pass02'
-,'¼±´ö¿©¿Õ'
-,'¿©ÀÚ'
+,'ì„ ë•ì—¬ì™•'
+,'ì—¬ìž'
 ,'010-1234-5678'
 ,'hong123@greedy.com'
 );
 
---Å×ÀÌºí ·¹º§¿¡¼­ CHECKÁ¦¾à Á¶°Ç ¼³Á¤
+--í…Œì´ë¸” ë ˆë²¨ì—ì„œ CHECKì œì•½ ì¡°ê±´ ì„¤ì •
 CREATE TABLE TEST_CHECK(
   TEST_NUMBER NUMBER,
   CONSTRAINT CK_TEST_NUMBER CHECK(TEST_NUMBER > 0)
   );
 
---TEST_CHECKÅ×ÀÌºí¿¡ »ðÀÔ Å×½ºÆ®
+--TEST_CHECKí…Œì´ë¸”ì— ì‚½ìž… í…ŒìŠ¤íŠ¸
 INSERT
   INTO TEST_CHECK
   (
@@ -425,18 +425,18 @@ VALUES
 
 
 
--- È¸¿ø °¡ÀÔ¿ë Å×ÀÌºí »ý¼º(USER_TEST)
--- ÄÃ·³¸í : USER_NO(È¸¿ø¹øÈ£)
---         USER_ID(È¸¿ø¾ÆÀÌµð) -- Áßº¹ ±ÝÁö, NULL°ª Çã¿ë ¾ÈÇÔ
---         USER_PWD(È¸¿øºñ¹Ð¹øÈ£) -- NULL°ª Çã¿ë ¾ÈÇÔ
---         PNO(ÁÖ¹Îµî·Ï¹øÈ£) -- Áßº¹ ±ÝÁö, NULL°ª Çã¿ë ¾ÈÇÔ
---         GENDER(¼ºº°) -- '³²' ¶Ç´Â '¿©'·Î ÀÔ·Â
---         PHONE(¿¬¶ôÃ³) 
---         ADDRESS(ÁÖ¼Ò)
---         STATUS(Å»Åð¿©ºÎ) -- NOT NULL, 'Y' È¤Àº 'N'À¸·Î ÀÔ·Â
--- °¢ Á¦¾àÁ¶°Ç ÀÌ¸§ ºÎ¿©
--- 5¸í ÀÌ»ó È¸¿ø Á¤º¸ INSERT
--- °¢ ÄÃ·³º°·Î ÄÚ¸àÆ® »ý¼º
+-- íšŒì› ê°€ìž…ìš© í…Œì´ë¸” ìƒì„±(USER_TEST)
+-- ì»¬ëŸ¼ëª… : USER_NO(íšŒì›ë²ˆí˜¸)
+--         USER_ID(íšŒì›ì•„ì´ë””) -- ì¤‘ë³µ ê¸ˆì§€, NULLê°’ í—ˆìš© ì•ˆí•¨
+--         USER_PWD(íšŒì›ë¹„ë°€ë²ˆí˜¸) -- NULLê°’ í—ˆìš© ì•ˆí•¨
+--         PNO(ì£¼ë¯¼ë“±ë¡ë²ˆí˜¸) -- ì¤‘ë³µ ê¸ˆì§€, NULLê°’ í—ˆìš© ì•ˆí•¨
+--         GENDER(ì„±ë³„) -- 'ë‚¨' ë˜ëŠ” 'ì—¬'ë¡œ ìž…ë ¥
+--         PHONE(ì—°ë½ì²˜) 
+--         ADDRESS(ì£¼ì†Œ)
+--         STATUS(íƒˆí‡´ì—¬ë¶€) -- NOT NULL, 'Y' í˜¹ì€ 'N'ìœ¼ë¡œ ìž…ë ¥
+-- ê° ì œì•½ì¡°ê±´ ì´ë¦„ ë¶€ì—¬
+-- 5ëª… ì´ìƒ íšŒì› ì •ë³´ INSERT
+-- ê° ì»¬ëŸ¼ë³„ë¡œ ì½”ë©˜íŠ¸ ìƒì„±
 
 CREATE TABLE USER_TEST(
   USER_NO NUMBER,
@@ -449,18 +449,18 @@ CREATE TABLE USER_TEST(
   STATUS VARCHAR2(3) CONSTRAINT NN_STATUS NOT NULL,
   CONSTRAINT UK_USER_ID UNIQUE(USER_ID),
   CONSTRAINT UK_PNO UNIQUE (PNO),
-  CONSTRAINT CK_GENDER CHECK(GENDER IN ('³²', '¿©')),
+  CONSTRAINT CK_GENDER CHECK(GENDER IN ('ë‚¨', 'ì—¬')),
   CONSTRAINT CK_STATUS CHECK(STATUS IN ('Y', 'N'))
 );
 
-COMMENT ON COLUMN USER_TEST.USER_NO IS 'È¸¿ø¹øÈ£';
-COMMENT ON COLUMN USER_TEST.USER_ID IS 'È¸¿ø¾ÆÀÌµð';
-COMMENT ON COLUMN USER_TEST.USER_PWD IS 'ºñ¹Ð¹øÈ£';
-COMMENT ON COLUMN USER_TEST.PNO IS 'ÁÖ¹Îµî·Ï¹øÈ£';
-COMMENT ON COLUMN USER_TEST.GENDER IS '¼ºº°';
-COMMENT ON COLUMN USER_TEST.PHONE IS '¿¬¶ôÃ³';
-COMMENT ON COLUMN USER_TEST.ADDRESS IS 'ÁÖ¼Ò';
-COMMENT ON COLUMN USER_TEST.STATUS IS 'Å»Åð¿©ºÎ';
+COMMENT ON COLUMN USER_TEST.USER_NO IS 'íšŒì›ë²ˆí˜¸';
+COMMENT ON COLUMN USER_TEST.USER_ID IS 'íšŒì›ì•„ì´ë””';
+COMMENT ON COLUMN USER_TEST.USER_PWD IS 'ë¹„ë°€ë²ˆí˜¸';
+COMMENT ON COLUMN USER_TEST.PNO IS 'ì£¼ë¯¼ë“±ë¡ë²ˆí˜¸';
+COMMENT ON COLUMN USER_TEST.GENDER IS 'ì„±ë³„';
+COMMENT ON COLUMN USER_TEST.PHONE IS 'ì—°ë½ì²˜';
+COMMENT ON COLUMN USER_TEST.ADDRESS IS 'ì£¼ì†Œ';
+COMMENT ON COLUMN USER_TEST.STATUS IS 'íƒˆí‡´ì—¬ë¶€';
 
 INSERT 
   INTO USER_TEST
@@ -472,8 +472,8 @@ INSERT
 VALUES
 (
   1, 'user01', 'pass01'
-, '881122-1234567', '¿©', '010-1234-5678'
-, '¼­¿ï½Ã °­³²±¸ ¿ª»ïµ¿', 'N'
+, '881122-1234567', 'ì—¬', '010-1234-5678'
+, 'ì„œìš¸ì‹œ ê°•ë‚¨êµ¬ ì—­ì‚¼ë™', 'N'
 );
 
 INSERT 
@@ -486,8 +486,8 @@ INSERT
 VALUES
 (
   2, 'user02', 'pass02'
-, '891122-1234567', '³²', '010-1234-5679'
-, '¼­¿ï½Ã °­³²±¸ ¿ª»ïµ¿', 'N'
+, '891122-1234567', 'ë‚¨', '010-1234-5679'
+, 'ì„œìš¸ì‹œ ê°•ë‚¨êµ¬ ì—­ì‚¼ë™', 'N'
 );
 
 INSERT 
@@ -500,8 +500,8 @@ INSERT
 VALUES
 (
   3, 'user03', 'pass03'
-, '901122-1234567', '¿©', '010-1234-5670'
-, '¼­¿ï½Ã °­³²±¸ ¿ª»ïµ¿', 'Y'
+, '901122-1234567', 'ì—¬', '010-1234-5670'
+, 'ì„œìš¸ì‹œ ê°•ë‚¨êµ¬ ì—­ì‚¼ë™', 'Y'
 );
 INSERT 
   INTO USER_TEST
@@ -513,8 +513,8 @@ INSERT
 VALUES
 (
   4, 'user04', 'pass04'
-, '911122-1234567', '³²', '010-1234-5671'
-, '¼­¿ï½Ã °­³²±¸ ¿ª»ïµ¿', 'N'
+, '911122-1234567', 'ë‚¨', '010-1234-5671'
+, 'ì„œìš¸ì‹œ ê°•ë‚¨êµ¬ ì—­ì‚¼ë™', 'N'
 );
 
 INSERT 
@@ -527,32 +527,32 @@ INSERT
 VALUES
 (
   5, 'user05', 'pass05'
-, '921122-1234567', '¿©', '010-1234-5672'
-, '¼­¿ï½Ã °­³²±¸ ¿ª»ïµ¿', 'N'
+, '921122-1234567', 'ì—¬', '010-1234-5672'
+, 'ì„œìš¸ì‹œ ê°•ë‚¨êµ¬ ì—­ì‚¼ë™', 'N'
 );
 
---PRIMARY KEY ±âº»Å° Á¦¾à Á¶°Ç
---Å×ÀÌºí¿¡¼­ ÇÚ ÇàÀÇ Á¤º¸¸¦ Ã£±â À§ÇØ »ç¿ëÇÒ ÄÃ·³À» ÀÇ¹ÌÇÑ´Ù. 
---Å×ÀÌºí¿¡ ´ëÇÑ ½Äº°ÀÚ ¿ªÇÒÀ» ÇÑ´Ù. 
+--PRIMARY KEY ê¸°ë³¸í‚¤ ì œì•½ ì¡°ê±´
+--í…Œì´ë¸”ì—ì„œ í•¸ í–‰ì˜ ì •ë³´ë¥¼ ì°¾ê¸° ìœ„í•´ ì‚¬ìš©í•  ì»¬ëŸ¼ì„ ì˜ë¯¸í•œë‹¤. 
+--í…Œì´ë¸”ì— ëŒ€í•œ ì‹ë³„ìž ì—­í• ì„ í•œë‹¤. 
  --PK
- --NOT NULL + UNIQUE ÀÇ ÀÇ¹Ì¸¦ °¡Áø´Ù. 
- --NULLÀÌ°Å³ª °°Àº °ªÀ» °¡Áö¸é ºÐº°·ÂÀÌ ¾ø±â ¶§¹®¿¡ 
- --ÇÑÅ×ÀÌºí´ç ÇÏ³ª¸¸ ¼³Á¤ÇÒ ¼ö ÀÖÀ¸¸ç ÄÃ·³ ·¹º§, Å×ÀÌºí·¹º§ µÑ´Ù ¼³Á¤ °¡´ÉÇÏ´Ù. 
- --ÇÑ°³ ÄÃ·³¿¡ ¼³Á¤ÇÒ ¼öµµ ÀÖ°í ¿©·¯°³ÀÇ ÄÃ·³À» ¹­¾î¼­ ¼³Á¤ÇÒ ¼öµµ ÀÖ´Ù. 
+ --NOT NULL + UNIQUE ì˜ ì˜ë¯¸ë¥¼ ê°€ì§„ë‹¤. 
+ --NULLì´ê±°ë‚˜ ê°™ì€ ê°’ì„ ê°€ì§€ë©´ ë¶„ë³„ë ¥ì´ ì—†ê¸° ë•Œë¬¸ì— 
+ --í•œí…Œì´ë¸”ë‹¹ í•˜ë‚˜ë§Œ ì„¤ì •í•  ìˆ˜ ìžˆìœ¼ë©° ì»¬ëŸ¼ ë ˆë²¨, í…Œì´ë¸”ë ˆë²¨ ë‘˜ë‹¤ ì„¤ì • ê°€ëŠ¥í•˜ë‹¤. 
+ --í•œê°œ ì»¬ëŸ¼ì— ì„¤ì •í•  ìˆ˜ë„ ìžˆê³  ì—¬ëŸ¬ê°œì˜ ì»¬ëŸ¼ì„ ë¬¶ì–´ì„œ ì„¤ì •í•  ìˆ˜ë„ ìžˆë‹¤. 
  
---ÄÃ·³·¹º§¿¡¼­ PK¼³Á¤
+--ì»¬ëŸ¼ë ˆë²¨ì—ì„œ PKì„¤ì •
 CREATE TABLE USER_PRIMARY (
  USER_NO NUMBER CONSTRAINT PK_USER_NO PRIMARY KEY,
  USER_ID VARCHAR2(20) UNIQUE,
  USER_PWD VARCHAR2(30) NOT NULL,
  USER_NAME VARCHAR2(30) NOT NULL,
- GENDER VARCHAR2 (10) CHECK(GENDER IN ('³²','¿©')),
+ GENDER VARCHAR2 (10) CHECK(GENDER IN ('ë‚¨','ì—¬')),
  PHONE VARCHAR2(30),
  EMAIL VARCHAR2(50) 
  SDADASDFD 
  );
 
---PRIMARY KEYÀÇ NOT NULL, UNIQUE Å×½ºÆ® 
+--PRIMARY KEYì˜ NOT NULL, UNIQUE í…ŒìŠ¤íŠ¸ 
  INSERT
 INTO USER_PRIMARY
 (
@@ -569,19 +569,19 @@ VALUES
 1
 ,'user01'
 ,'pass01'
-,'¼±´ö¿©¿Õ'
-,'¿©'
+,'ì„ ë•ì—¬ì™•'
+,'ì—¬'
 ,'010-1234-5678'
 ,'hong123@greedy.com'
 );
 
---Å×ÀÌºí ·¹º§¿¡¼­ PK¼³Á¤ (µÎ°³ÀÇ °ªÀ» ±âº»Å°·Î ¼³Á¤ÇÒ¶§ º¹ÇÕÅ°¶ó°í ÇÔ)
+--í…Œì´ë¸” ë ˆë²¨ì—ì„œ PKì„¤ì • (ë‘ê°œì˜ ê°’ì„ ê¸°ë³¸í‚¤ë¡œ ì„¤ì •í• ë•Œ ë³µí•©í‚¤ë¼ê³  í•¨)
 CREATE TABLE USER_PRIMARY2 (
  USER_NO NUMBER,
  USER_ID VARCHAR2(20),
  USER_PWD VARCHAR2(30) NOT NULL,
  USER_NAME VARCHAR2(30) NOT NULL,
- GENDER VARCHAR2 (10) CHECK(GENDER IN ('³²','¿©')),
+ GENDER VARCHAR2 (10) CHECK(GENDER IN ('ë‚¨','ì—¬')),
  PHONE VARCHAR2(30),
  EMAIL VARCHAR2(50),
  CONSTRAINT PK_USER_NO2 PRIMARY KEY(USER_NO, USER_ID)
@@ -589,43 +589,43 @@ CREATE TABLE USER_PRIMARY2 (
 
 
 
--- FOREIGN KEY(¿ÜºÎÅ°|¿Ü·¡Å°) Á¦¾à Á¶°Ç
--- ÂüÁ¶(REFERENCES) µÈ ´Ù¸¥ Å×ÀÌºí¿¡¼­ Á¦°øÇÏ´Â °ª¸¸ »ç¿ëÇÒ ¼ö ÀÖ´Ù.
--- ÂüÁ¶ ¹«°á¼ºÀ» À§¹èÇÏÁö ¾Ê±â À§ÇØ¼­ »ç¿ëÇÑ´Ù.
--- FOREIGN KEY Á¦¾à Á¶°Ç¿¡ ÀÇÇØ¼­ Å×ÀÌºí °£ÀÇ °ü°è°¡ Çü¼º µÇ¸ç Á¦°øµÇ´Â °ª ¿Ü¿¡´Â NULLÀ» »ç¿ëÇÒ ¼ö ÀÖ´Ù.
+-- FOREIGN KEY(ì™¸ë¶€í‚¤|ì™¸ëž˜í‚¤) ì œì•½ ì¡°ê±´
+-- ì°¸ì¡°(REFERENCES) ëœ ë‹¤ë¥¸ í…Œì´ë¸”ì—ì„œ ì œê³µí•˜ëŠ” ê°’ë§Œ ì‚¬ìš©í•  ìˆ˜ ìžˆë‹¤.
+-- ì°¸ì¡° ë¬´ê²°ì„±ì„ ìœ„ë°°í•˜ì§€ ì•Šê¸° ìœ„í•´ì„œ ì‚¬ìš©í•œë‹¤.
+-- FOREIGN KEY ì œì•½ ì¡°ê±´ì— ì˜í•´ì„œ í…Œì´ë¸” ê°„ì˜ ê´€ê³„ê°€ í˜•ì„± ë˜ë©° ì œê³µë˜ëŠ” ê°’ ì™¸ì—ëŠ” NULLì„ ì‚¬ìš©í•  ìˆ˜ ìžˆë‹¤.
 
--- ÄÃ·³ ·¹º§ÀÎ °æ¿ì
--- ÄÃ·³¸í ÀÚ·áÇü(Å©±â) [CONSTRAINT Á¦¾àÁ¶°Ç¸í] REFERENCES ÂüÁ¶Å×ÀÌºí¸í [(ÂüÁ¶ÄÃ·³¸í)] [»èÁ¦·ê]
+-- ì»¬ëŸ¼ ë ˆë²¨ì¸ ê²½ìš°
+-- ì»¬ëŸ¼ëª… ìžë£Œí˜•(í¬ê¸°) [CONSTRAINT ì œì•½ì¡°ê±´ëª…] REFERENCES ì°¸ì¡°í…Œì´ë¸”ëª… [(ì°¸ì¡°ì»¬ëŸ¼ëª…)] [ì‚­ì œë£°]
 
--- Å×ÀÌºí ·¹º§ÀÎ °æ¿ì
--- [CONSTRAINT Á¦¾àÁ¶°Ç¸í] FOREIGN KEY(Àû¿ëÄÃ·³¸í) REFENECES ÂüÁ¶Å×ÀÌºí¸í [(ÂüÁ¶ÄÃ·³¸í)] [»èÁ¦·ê]
+-- í…Œì´ë¸” ë ˆë²¨ì¸ ê²½ìš°
+-- [CONSTRAINT ì œì•½ì¡°ê±´ëª…] FOREIGN KEY(ì ìš©ì»¬ëŸ¼ëª…) REFENECES ì°¸ì¡°í…Œì´ë¸”ëª… [(ì°¸ì¡°ì»¬ëŸ¼ëª…)] [ì‚­ì œë£°]
 
--- ÂüÁ¶Å×ÀÌºíÀÇ ÂüÁ¶ÄÃ·³¸íÀÌ »ý·«µÇ¸é PRIMARY KEY·Î ¼³Á¤ µÈ ÄÃ·³ÀÌ ÀÚµ¿À¸·Î ÂüÁ¶ ÄÃ·³ÀÌ µÈ´Ù.
--- PRIMARY KEY ÄÃ·³°ú UNIQUE·Î ÁöÁ¤µÈ ÄÃ·³¸¸ ÂüÁ¶ µÉ ¼ö ÀÖ´Ù.
+-- ì°¸ì¡°í…Œì´ë¸”ì˜ ì°¸ì¡°ì»¬ëŸ¼ëª…ì´ ìƒëžµë˜ë©´ PRIMARY KEYë¡œ ì„¤ì • ëœ ì»¬ëŸ¼ì´ ìžë™ìœ¼ë¡œ ì°¸ì¡° ì»¬ëŸ¼ì´ ëœë‹¤.
+-- PRIMARY KEY ì»¬ëŸ¼ê³¼ UNIQUEë¡œ ì§€ì •ëœ ì»¬ëŸ¼ë§Œ ì°¸ì¡° ë  ìˆ˜ ìžˆë‹¤.
 
 
---»èÁ¦¿É¼Ç
--- : ºÎ¸ðÅ×ÀÌºíÀÇ µ¥ÀÌÅÍ »èÁ¦½Ã ÀÚ½Ä Å×ÀÌºíÀÇ µ¥ÀÌÅÍ¸¦ ¾î¶² ½ÄÀ¸·Î Ã³¸®ÇÒ °ÍÀÎÁö¿¡ ´ëÇÑ ¼³Á¤
+--ì‚­ì œì˜µì…˜
+-- : ë¶€ëª¨í…Œì´ë¸”ì˜ ë°ì´í„° ì‚­ì œì‹œ ìžì‹ í…Œì´ë¸”ì˜ ë°ì´í„°ë¥¼ ì–´ë–¤ ì‹ìœ¼ë¡œ ì²˜ë¦¬í•  ê²ƒì¸ì§€ì— ëŒ€í•œ ì„¤ì •
 DELETE
   FROM USER_GRADE
  WHERE GRADE_CODE = 10;
 
---ON DELETE RESTRICT :  »èÁ¦ ±âº» ÁöÁ¤ ·ê
---FK·Î ÁöÁ¤ µÈ ÄÃ·³¿¡¼­ »ç¿ëµÇ°í ÀÖ´Â °ªÀÏ °æ¿ì Á¦°øÇÏ´Â ÄÃ·³ÀÇ °ªÀº »èÁ¦ ºÒ°¡ .
+--ON DELETE RESTRICT :  ì‚­ì œ ê¸°ë³¸ ì§€ì • ë£°
+--FKë¡œ ì§€ì • ëœ ì»¬ëŸ¼ì—ì„œ ì‚¬ìš©ë˜ê³  ìžˆëŠ” ê°’ì¼ ê²½ìš° ì œê³µí•˜ëŠ” ì»¬ëŸ¼ì˜ ê°’ì€ ì‚­ì œ ë¶ˆê°€ .
 
---ÀÚ½Ä ·¹ÄÚµå·Î »ç¿ëµÇÁö ¾ÊÀº °ªÀº »èÁ¦°¡´É
+--ìžì‹ ë ˆì½”ë“œë¡œ ì‚¬ìš©ë˜ì§€ ì•Šì€ ê°’ì€ ì‚­ì œê°€ëŠ¥
 DELETE
   FROM USER_GRADE
  WHERE GRADE_CODE = 20; 
--- ON DELETE RESTRICT : »èÁ¦ ±âº» ÁöÁ¤ ·ê
--- FK·Î ÁöÁ¤ µÈ ÄÃ·³¿¡¼­ »ç¿ë µÇ°í ÀÖ´Â °ªÀÏ °æ¿ì Á¦°øÇÏ´Â ÄÃ·³ÀÇ °ªÀº »èÁ¦ ºÒ°¡
+-- ON DELETE RESTRICT : ì‚­ì œ ê¸°ë³¸ ì§€ì • ë£°
+-- FKë¡œ ì§€ì • ëœ ì»¬ëŸ¼ì—ì„œ ì‚¬ìš© ë˜ê³  ìžˆëŠ” ê°’ì¼ ê²½ìš° ì œê³µí•˜ëŠ” ì»¬ëŸ¼ì˜ ê°’ì€ ì‚­ì œ ë¶ˆê°€
 
--- ÀÚ½Ä ·¹ÄÚµå·Î »ç¿ëµÇÁö ¾Ê´Â °ªÀº »èÁ¦ °¡´É
+-- ìžì‹ ë ˆì½”ë“œë¡œ ì‚¬ìš©ë˜ì§€ ì•ŠëŠ” ê°’ì€ ì‚­ì œ ê°€ëŠ¥
 DELETE
   FROM USER_GRADE
  WHERE GRADE_CODE = 20;
 
--- ON DELETE SET NULL : ºÎ¸ðÅ°¸¦ »èÁ¦ ½Ã ÀÚ½Ä Å°¸¦ NULL·Î º¯°æÇÏ´Â ¿É¼Ç
+-- ON DELETE SET NULL : ë¶€ëª¨í‚¤ë¥¼ ì‚­ì œ ì‹œ ìžì‹ í‚¤ë¥¼ NULLë¡œ ë³€ê²½í•˜ëŠ” ì˜µì…˜
 CREATE TABLE USER_GRADE2(
   GRADE_CODE NUMBER PRIMARY KEY,
   GRADE_NAME VARCHAR2(30) NOT NULL
@@ -640,7 +640,7 @@ INSERT
 VALUES
 (
   10
-, 'ÀÏ¹ÝÈ¸¿ø'
+, 'ì¼ë°˜íšŒì›'
 );
 
 INSERT 
@@ -652,7 +652,7 @@ INSERT
 VALUES
 (
   20
-, '¿ì¼öÈ¸¿ø'
+, 'ìš°ìˆ˜íšŒì›'
 );
 
 INSERT 
@@ -664,7 +664,7 @@ INSERT
 VALUES
 (
   30
-, 'Æ¯º°È¸¿ø'
+, 'íŠ¹ë³„íšŒì›'
 );
 
 SELECT
@@ -676,7 +676,7 @@ CREATE TABLE USER_FOREIGNKEY2 (
   USER_ID VARCHAR2(20) UNIQUE,
   USER_PWD VARCHAR2(30) NOT NULL,
   USER_NAME VARCHAR2(30),
-  GENDER VARCHAR2(10) CHECK(GENDER IN ('³²', '¿©')),
+  GENDER VARCHAR2(10) CHECK(GENDER IN ('ë‚¨', 'ì—¬')),
   PHONE VARCHAR2(30),
   EMAIL VARCHAR2(50),
   GRADE_CODE NUMBER,
@@ -700,8 +700,8 @@ VALUES
   1
 , 'user01'
 , 'pass01'
-, 'È«±æµ¿'
-, '³²'
+, 'í™ê¸¸ë™'
+, 'ë‚¨'
 , '010-1234-5678'
 , 'hong123@greedy.com'
 , 10
@@ -724,8 +724,8 @@ VALUES
   2
 , 'user02'
 , 'pass02'
-, 'À¯°ü¼ø'
-, '¿©'
+, 'ìœ ê´€ìˆœ'
+, 'ì—¬'
 , '010-1111-2222'
 , 'yoo123@greedy.com'
 , 10
@@ -748,13 +748,13 @@ VALUES
   3
 , 'user03'
 , 'pass03'
-, 'À±ºÀ±æ'
-, '³²'
+, 'ìœ¤ë´‰ê¸¸'
+, 'ë‚¨'
 , '010-1234-5678'
 , 'yoon123@greedy.com'
 , 30
 );
--- FK´Â NULL °ªÀ» Çã¿ëÇÑ´Ù.
+-- FKëŠ” NULL ê°’ì„ í—ˆìš©í•œë‹¤.
 INSERT
   INTO USER_FOREIGNKEY2
 (
@@ -772,13 +772,13 @@ VALUES
   4
 , 'user04'
 , 'pass04'
-, '¼±´ö¿©¿Õ'
-, '¿©'
+, 'ì„ ë•ì—¬ì™•'
+, 'ì—¬'
 , '010-1234-5678'
 , 'sun123@greedy.com'
 , NULL
 );
--- ºÎ¸ð Å°°¡ ¾ø¾î ¿Ü·¡Å° Á¦¾à Á¶°Ç À§¹Ý
+-- ë¶€ëª¨ í‚¤ê°€ ì—†ì–´ ì™¸ëž˜í‚¤ ì œì•½ ì¡°ê±´ ìœ„ë°˜
 INSERT
   INTO USER_FOREIGNKEY2
 (
@@ -796,13 +796,13 @@ VALUES
   5
 , 'user05'
 , 'pass05'
-, '½Å»çÀÓ´ç'
-, '¿©'
+, 'ì‹ ì‚¬ìž„ë‹¹'
+, 'ì—¬'
 , '010-1234-5678'
 , 'shin123@greedy.com'
 , 50
 );
--- »èÁ¦ Á¦ÇÑÀÌ °É·ÁÀÖÁö ¾Ê¾Æ ÀÚ½Ä ·¹ÄÚµå°¡ ÀÖ´õ¶óµµ »èÁ¦°¡ ¼öÇàµÈ´Ù.
+-- ì‚­ì œ ì œí•œì´ ê±¸ë ¤ìžˆì§€ ì•Šì•„ ìžì‹ ë ˆì½”ë“œê°€ ìžˆë”ë¼ë„ ì‚­ì œê°€ ìˆ˜í–‰ëœë‹¤.
 DELETE 
   FROM USER_GRADE2
  WHERE GRADE_CODE = 10;
@@ -810,12 +810,12 @@ DELETE
 SELECT
        UG.*
   FROM USER_GRADE2 UG;
--- ´ë½Å »èÁ¦ µÈ °ªÀ» ÂüÁ¶ÇÒ ¼ö´Â ¾øÀ¸¹Ç·Î NULL °ªÀ¸·Î º¯°æµÇ¾î ÀÖ´Â °ÍÀ» È®ÀÎÇÒ ¼ö ÀÖ´Ù.
+-- ëŒ€ì‹  ì‚­ì œ ëœ ê°’ì„ ì°¸ì¡°í•  ìˆ˜ëŠ” ì—†ìœ¼ë¯€ë¡œ NULL ê°’ìœ¼ë¡œ ë³€ê²½ë˜ì–´ ìžˆëŠ” ê²ƒì„ í™•ì¸í•  ìˆ˜ ìžˆë‹¤.
 SELECT
        UF.*
   FROM USER_FOREIGNKEY2 UF;
 
--- ON DELETE CASCADE : ºÎ¸ð Å° »èÁ¦ ½Ã ÀÚ½Ä Å°¸¦ °¡Áø Çàµµ ÇÔ²² »èÁ¦
+-- ON DELETE CASCADE : ë¶€ëª¨ í‚¤ ì‚­ì œ ì‹œ ìžì‹ í‚¤ë¥¼ ê°€ì§„ í–‰ë„ í•¨ê»˜ ì‚­ì œ
 CREATE TABLE USER_GRADE3(
   GRADE_CODE NUMBER PRIMARY KEY,
   GRADE_NAME VARCHAR2(30) NOT NULL
@@ -830,7 +830,7 @@ INSERT
 VALUES
 (
   10
-, 'ÀÏ¹ÝÈ¸¿ø'
+, 'ì¼ë°˜íšŒì›'
 );
 
 INSERT 
@@ -842,7 +842,7 @@ INSERT
 VALUES
 (
   20
-, '¿ì¼öÈ¸¿ø'
+, 'ìš°ìˆ˜íšŒì›'
 );
 
 INSERT 
@@ -854,7 +854,7 @@ INSERT
 VALUES
 (
   30
-, 'Æ¯º°È¸¿ø'
+, 'íŠ¹ë³„íšŒì›'
 );
 
 SELECT
@@ -866,7 +866,7 @@ CREATE TABLE USER_FOREIGNKEY3 (
   USER_ID VARCHAR2(20) UNIQUE,
   USER_PWD VARCHAR2(30) NOT NULL,
   USER_NAME VARCHAR2(30),
-  GENDER VARCHAR2(10) CHECK(GENDER IN ('³²', '¿©')),
+  GENDER VARCHAR2(10) CHECK(GENDER IN ('ë‚¨', 'ì—¬')),
   PHONE VARCHAR2(30),
   EMAIL VARCHAR2(50),
   GRADE_CODE NUMBER,
@@ -890,8 +890,8 @@ VALUES
   1
 , 'user01'
 , 'pass01'
-, 'È«±æµ¿'
-, '³²'
+, 'í™ê¸¸ë™'
+, 'ë‚¨'
 , '010-1234-5678'
 , 'hong123@greedy.com'
 , 10
@@ -914,8 +914,8 @@ VALUES
   2
 , 'user02'
 , 'pass02'
-, 'À¯°ü¼ø'
-, '¿©'
+, 'ìœ ê´€ìˆœ'
+, 'ì—¬'
 , '010-1111-2222'
 , 'yoo123@greedy.com'
 , 10
@@ -938,13 +938,13 @@ VALUES
   3
 , 'user03'
 , 'pass03'
-, 'À±ºÀ±æ'
-, '³²'
+, 'ìœ¤ë´‰ê¸¸'
+, 'ë‚¨'
 , '010-1234-5678'
 , 'yoon123@greedy.com'
 , 30
 );
--- FK´Â NULL °ªÀ» Çã¿ëÇÑ´Ù.
+-- FKëŠ” NULL ê°’ì„ í—ˆìš©í•œë‹¤.
 INSERT
   INTO USER_FOREIGNKEY3
 (
@@ -962,13 +962,13 @@ VALUES
   4
 , 'user04'
 , 'pass04'
-, '¼±´ö¿©¿Õ'
-, '¿©'
+, 'ì„ ë•ì—¬ì™•'
+, 'ì—¬'
 , '010-1234-5678'
 , 'sun123@greedy.com'
 , NULL
 );
--- ºÎ¸ð Å°°¡ ¾ø¾î ¿Ü·¡Å° Á¦¾à Á¶°Ç À§¹Ý
+-- ë¶€ëª¨ í‚¤ê°€ ì—†ì–´ ì™¸ëž˜í‚¤ ì œì•½ ì¡°ê±´ ìœ„ë°˜
 INSERT
   INTO USER_FOREIGNKEY3
 (
@@ -986,13 +986,13 @@ VALUES
   5
 , 'user05'
 , 'pass05'
-, '½Å»çÀÓ´ç'
-, '¿©'
+, 'ì‹ ì‚¬ìž„ë‹¹'
+, 'ì—¬'
 , '010-1234-5678'
 , 'shin123@greedy.com'
 , 50
 );
--- »èÁ¦ Á¦ÇÑÀÌ °É·ÁÀÖÁö ¾Ê¾Æ ÀÚ½Ä ·¹ÄÚµå°¡ ÀÖ´õ¶óµµ »èÁ¦ °¡´É
+-- ì‚­ì œ ì œí•œì´ ê±¸ë ¤ìžˆì§€ ì•Šì•„ ìžì‹ ë ˆì½”ë“œê°€ ìžˆë”ë¼ë„ ì‚­ì œ ê°€ëŠ¥
 DELETE
   FROM USER_GRADE3
  WHERE GRADE_CODE = 10;
@@ -1000,13 +1000,13 @@ DELETE
 SELECT
        UG.*
   FROM USER_GRADE3 UG;
--- ´ë½Å »èÁ¦ µÈ °ªÀ» ÂüÁ¶ÇÒ ¼ö ¾øÀ¸¹Ç·Î ÀÚ½Ä Å×ÀÌºíÀÇ ÇØ´ç ÇàÀÌ °°ÀÌ »èÁ¦ µÇ¾ú´Ù.
+-- ëŒ€ì‹  ì‚­ì œ ëœ ê°’ì„ ì°¸ì¡°í•  ìˆ˜ ì—†ìœ¼ë¯€ë¡œ ìžì‹ í…Œì´ë¸”ì˜ í•´ë‹¹ í–‰ì´ ê°™ì´ ì‚­ì œ ë˜ì—ˆë‹¤.
 SELECT
        UF.*
   FROM USER_FOREIGNKEY3 UF;
 
--- ¼­ºêÄõ¸®¸¦ ÀÌ¿ëÇÑ Å×ÀÌºí »ý¼º
--- ÄÃ·³¸í, µ¥ÀÌÅÍÅ¸ÀÔ, °ªÀÌ º¹»çµÇ°í, Á¦¾àÁ¶°ÇÀº NOT NULL¸¸ º¹»çµÈ´Ù.
+-- ì„œë¸Œì¿¼ë¦¬ë¥¼ ì´ìš©í•œ í…Œì´ë¸” ìƒì„±
+-- ì»¬ëŸ¼ëª…, ë°ì´í„°íƒ€ìž…, ê°’ì´ ë³µì‚¬ë˜ê³ , ì œì•½ì¡°ê±´ì€ NOT NULLë§Œ ë³µì‚¬ëœë‹¤.
 CREATE TABLE EMPLOYEE_COPY
 AS
 SELECT
